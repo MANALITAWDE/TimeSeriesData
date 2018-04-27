@@ -17,7 +17,7 @@ cmd:text('Options')
 cmd:option('-if_evaluate_all_class', true, 'experiments on all the class numbers' )
 cmd:option('-if_choose_dropout', true, 'if perform cross validation to choose the dropout value, normally 0 is the best choice')
 --- data
-cmd:option('-data_name','arabic_voice_mixed','data directory.') -- options: 'arabic', 'MCYT'
+cmd:option('-data_name','power aggregation dataset','data directory.') -- options: 'arabic', 'MCYT'
 cmd:option('-data_dir','../rnn_TiSSiLe_data/','data directory.')
 cmd:option('-result_dir','result','result directory.')
 cmd:option('-class_number', 10, 'the class number taken into account in the data set')
@@ -73,7 +73,7 @@ local factor = 32 / opt.rnn_size
 opt.learning_rate = opt.learning_rate * factor
 
 -- for window_size
-if opt.data_name == 'Sign'then
+if opt.data_name == 'power aggregation dataset'then
   opt.window_size = 2
 elseif opt.data_name == 'MCYT' or opt.data_name == 'MCYT_with_forgery' then
   opt.window_size = 3
@@ -85,14 +85,15 @@ end
 
 -- obtain the corresponding class_numbers
 local class_numbers = {}
-if opt.data_name == 'MCYT' or opt.data_name == 'MCYT_with_forgery' then
-  class_numbers = {5, 10, 20, 50, 70, 100}
+if opt.data_name == 'power aggregation dataset' then
+  class_numbers = {111, 102, 103, 108}
 elseif opt.data_name == 'arabic' then
   class_numbers = {2, 5, 7, 10}
 elseif opt.data_name == 'arabic_voice_single' or opt.data_name == 'arabic_voice_mixed' then
   class_numbers = {5, 10, 20, 40, 60, 88}
 elseif opt.data_name == 'Sign' then
   class_numbers = {5, 10, 14, 19}
+ 
 else
   error('there is no such dataset!')
 end
@@ -125,7 +126,7 @@ local function evaluate_one_class_number(opt, cn)
     class_ind = opt.class_number
     local function table_find()
       local rtn_cn
-      for i = 1, #class_numbers do
+      for i = 1, 134 do
         if class_numbers[i] == class_ind then
           rtn_cn = i
           break
@@ -211,7 +212,7 @@ local function evaluate_one_class_number(opt, cn)
 end
 
 if opt.if_evaluate_all_class then
-  for cn=1, #class_numbers do
+  for cn=1, 153 do
     opt = table_operation.shallowCopy(initial_opt)
     evaluate_one_class_number(opt, cn)
   end

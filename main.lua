@@ -23,7 +23,7 @@ cmd:text('Train a rnn-based TiSSiLe model')
 cmd:text()
 cmd:text('Options')
 --- data
-cmd:option('-data_name','arabic_voice_mixed','data directory.') -- options: 'arabic', 'MCYT'
+cmd:option('-data_name','power aggregation dataset','data directory.') -- options: 'arabic', 'MCYT'
 cmd:option('-data_dir','../../rnn_TiSSiLe_data/','data directory.')
 cmd:option('-result_dir','result','result directory.')
 cmd:option('-class_number', 88, 'the class number taken into account in the data set')
@@ -74,7 +74,7 @@ local opt = cmd:parse(arg)
 print('data set: ', opt.data_name)
 
 -- for learning rate
-if opt.data_name == 'Sign'then
+if opt.data_name == 'power aggregation dataset'then
   opt.learning_rate = 0.001
 else
   opt.learning_rate = 0.002

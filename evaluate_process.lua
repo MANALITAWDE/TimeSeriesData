@@ -7,8 +7,8 @@ local model_utils = require 'util.model_utils'
 
 
 local evaluate_process = {}
-
---- preprocessing helper function
+                                                
+--- preprocessing helper function                 
 local function prepro(opt, x)
   x = x:transpose(1,2):contiguous()
   if opt.gpuid >= 0 and opt.opencl == 0 then -- ship the input arrays to GPU

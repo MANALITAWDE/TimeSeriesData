@@ -122,7 +122,7 @@ local function feval(opt, loader, model, rmsprop_para)
     -- perform back propagation through time (BPTT)
     for t = x1_length,1,-1 do
       local doutput_t = grad_net[1][t]
-      table.insert(drnn1_state[t], doutput_t)
+      table.insert(drnn1_state[t], doutput_t) 
       local dlst = clones_rnn1[t]:backward({x1:narrow(1, t, 1), unpack(rnn1_state[t-1])}, drnn1_state[t])
       drnn1_state[t-1] = {}
       for k,v in pairs(dlst) do
@@ -142,7 +142,7 @@ local function feval(opt, loader, model, rmsprop_para)
       local doutput_t = grad_net[2][t]
       table.insert(drnn2_state[t], doutput_t)
       local dlst = clones_rnn2[t]:backward({x2:narrow(1, t, 1), unpack(rnn2_state[t-1])}, drnn2_state[t])
-      drnn2_state[t-1] = {}
+      drnn2_state[t-1] = {}                       
       for k,v in pairs(dlst) do
         if k > 1 then -- k == 1 is gradient on x, which we dont need
           -- note we do k-1 because first item is dembeddings, and then follow the 
